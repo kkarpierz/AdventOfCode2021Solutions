@@ -19,7 +19,7 @@ namespace Day03
         //Gets most common bits at the same position
         public string CalculateGamma()
         {
-            if (_vectorsData.Count == 0)
+            if (_vectorsData == null)
                 throw new Exception("Vectors Data is empty. Please provide data into the class.");
 
             // without knowing that every string has same length => should be checked too

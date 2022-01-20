@@ -9,10 +9,10 @@ using Day03;
 Console.WriteLine("Advent of code - day 03\n*******************\n");
 
 Console.WriteLine("Getting File Data");
-//Invoker invoker = new Invoker();
+Invoker invoker = new Invoker();
 var fileCommand = new FileLinesExtractCommand("day03");
-//invoker.SetOnStart(fileCommand);
-//invoker.FileDataLines();
+invoker.SetOnStart(fileCommand);
+invoker.FileDataLines();
 
 List<string> data = fileCommand.DataLines;
 
@@ -21,8 +21,6 @@ var GammaCalculate = new GammaCountCommand(data);
 var gammaResult = GammaCalculate.CalculateGamma();
 var epsilonResult = GammaCalculate.CalculateEpsilon();
 
-
-
 Console.WriteLine("Results: gamma = " + gammaResult + " | epsilon = " + epsilonResult + "\n");
 
 // then multiply it by yourself :)
@@ -30,11 +28,11 @@ Console.WriteLine("Results: gamma = " + gammaResult + " | epsilon = " + epsilonR
 
 // part2
 
-Rating rating = new Rating();
+Rating rating = new(data);
 ICommand oxygenRatingCommand = new OxygenRatingCommand(rating);
 ICommand co2RatingCommand = new CO2RatingCommand(rating);
 
-StatsOptions statsRatings = new StatsOptions(oxygenRatingCommand, co2RatingCommand);
+StatsOptions statsRatings = new(oxygenRatingCommand, co2RatingCommand);
 statsRatings.chooseOxygenRating();
 statsRatings.chooseCO2Rating();
 

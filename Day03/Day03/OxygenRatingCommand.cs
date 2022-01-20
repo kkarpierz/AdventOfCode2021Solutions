@@ -15,7 +15,7 @@ namespace Day03
             _rating = rating;
         }
 
-        void ICommand.Execute()
+        public void Execute()
         {
             _rating.OxygenRatingCalculate();
         }
