@@ -15,21 +15,14 @@ namespace Day03
         public Rating(List<string> data)
         {
             _data = data;
-            _oxygenRatingResult = String.Empty;
-            _co2RatingResult = String.Empty;
+            _oxygenRatingResult = string.Empty;
+            _co2RatingResult = string.Empty;
         }
-
-        // todo
-        // methods for example multiplying them
-
 
         public void OxygenRatingCalculate()
         {
-
             if (_data.Count == 0)
-            {
                 throw new Exception("Data from the input file cannot be empty");
-            }
 
             List<string> selectedSequence = _data;
 
@@ -39,13 +32,9 @@ namespace Day03
 
                 // then keep all with ones at the currently iterating position (from '1' bit)
                 if (oneIsTheMostCommon)
-                {
                     selectedSequence = selectedSequence.Where(sequence => sequence.ElementAt(i) == '1').ToList();
-                }
                 else
-                {
                     selectedSequence = selectedSequence.Where(sequence => sequence.ElementAt(i) == '0').ToList();
-                }
 
                 if (selectedSequence.Count == 1)
                     break;
@@ -63,9 +52,7 @@ namespace Day03
         public void CO2RatingCalculate()
         {
             if (_data.Count == 0)
-            {
                 throw new Exception("Data from the input file cannot be empty");
-            }
 
             List<string> selectedSequence = _data;
 
@@ -76,13 +63,9 @@ namespace Day03
                 // then keep all with ones at the currently iterating position (from '0' bit)
                 // we find here the least common, so when the ones are more commons than zeros then zeros is result
                 if (zeroIsTheLeastCommon)
-                {
                     selectedSequence = selectedSequence.Where(sequence => sequence.ElementAt(i) == '0').ToList();
-                }
                 else
-                {
                     selectedSequence = selectedSequence.Where(sequence => sequence.ElementAt(i) == '1').ToList();
-                }
 
                 if (selectedSequence.Count == 1)
                     break;
@@ -106,6 +89,12 @@ namespace Day03
             calculateZerosOccurences = actualSequences.Count(sequence => sequence.ElementAt(placeNum) == '0');
 
             return calculateOnesOccurences >= calculateZerosOccurences;
+        }
+
+        public void PrintResult()
+        {
+            Console.WriteLine("\nMultiply result: " + 
+                    Convert.ToInt64(_oxygenRatingResult, 2) * Convert.ToInt64(_co2RatingResult, 2));
         }
 
     }

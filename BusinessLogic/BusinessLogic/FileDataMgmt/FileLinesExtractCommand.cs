@@ -22,7 +22,7 @@ namespace BusinessLogic
         {
             _dataLines = new List<string>();
 
-            foreach (string line in System.IO.File.ReadLines(@"..\..\..\..\..\Files\" + _dataFileName + ".txt"))
+            foreach (string line in System.IO.File.ReadLines(@"..\..\..\..\..\AdventOfCode2021\Files\" + _dataFileName + ".txt"))
             {
                 _dataLines.Add(line);
             }

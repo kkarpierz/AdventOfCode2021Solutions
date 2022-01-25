@@ -26,5 +26,6 @@ namespace Day03
         {
             _co2RatingCommand.Execute();
         }
+
     }
 }

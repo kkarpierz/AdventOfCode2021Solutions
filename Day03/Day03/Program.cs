@@ -23,8 +23,6 @@ var epsilonResult = GammaCalculate.CalculateEpsilon();
 
 Console.WriteLine("Results: gamma = " + gammaResult + " | epsilon = " + epsilonResult + "\n");
 
-// then multiply it by yourself :)
-
 
 // part2
 
@@ -35,6 +33,8 @@ ICommand co2RatingCommand = new CO2RatingCommand(rating);
 StatsOptions statsRatings = new(oxygenRatingCommand, co2RatingCommand);
 statsRatings.chooseOxygenRating();
 statsRatings.chooseCO2Rating();
+
+rating.PrintResult();
 
 Console.ReadKey();
 
