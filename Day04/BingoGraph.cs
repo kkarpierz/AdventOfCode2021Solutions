@@ -12,6 +12,15 @@ namespace Day04
         private List<int> _foundNumbers = new();
         private List<int> _foundBingoLine = new();
 
+        public List<List<int>> Matrix { get => _matrix; }
+
+        public BingoGraph() { }
+
+        // copy constructor
+        public BingoGraph(BingoGraph bingoGraph) {
+            _matrix = bingoGraph._matrix;
+        }
+
         public void FillMatrix(List<string> matrixData)
         {
             List<List<int>> tempMatrix = new();
@@ -72,8 +81,6 @@ namespace Day04
                 foreach (var cell in _matrix.ElementAt(i))
                     column.Add(cell);
 
-                // think of extracting of this below
-                // be aware if distinct is needed here also
                 if (column.Intersect(_foundNumbers).ToList().Count() == column.Count()) 
                 {
                     _foundBingoLine = column;
@@ -111,5 +118,24 @@ namespace Day04
 
             return sumOfElementsNotFound * _foundNumbers.Last();
         }
+
+        public int MultiplyUnmarkedNumsUntilConcreteOne(List<int> bingoNums, int lastNumber)
+        {
+            List<int> bingoNumsUntilTheLastOne = new();
+            foreach(var num in bingoNums)
+            {
+                bingoNumsUntilTheLastOne.Add(num);
+                if (num == lastNumber)
+                    break;
+            }
+
+            int tempSum = 0;
+
+            foreach(var row in _matrix)
+                tempSum += row.Where(x => !bingoNumsUntilTheLastOne.Contains(x)).Sum();
+
+            return tempSum * lastNumber;
+        }
+
     }
 }

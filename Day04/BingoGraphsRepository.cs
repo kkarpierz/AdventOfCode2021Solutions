@@ -20,6 +20,7 @@ namespace Day04
             _bingoNumbersToType = bingoNumbersToType;
             _bingoDataSaved = new();
             _bingoGraphs = new();
+            _bingoNumbers = new();
         }
 
         private void SplitTextIntoSeparateBoards()
@@ -68,9 +69,15 @@ namespace Day04
 
         private void IterateThroughNumbersAndCheckResults()
         {
-            BingoGraph bingoGraphWithResult = new();
-            bool resultIsSet = false;
-            int result;
+            bool firstResultIsSet = false;
+            bool lastResultIsSet = false;
+            int lastNumber = 0;
+
+            List<BingoGraph> bingoGraphsWithoutSolutionYet = new();
+            foreach(var tempBingoGraph in _bingoGraphs)
+            {
+                bingoGraphsWithoutSolutionYet.Add(new BingoGraph(tempBingoGraph));
+            }
 
             foreach (var number in _bingoNumbers)
             {
@@ -79,19 +86,34 @@ namespace Day04
                     bingoGraph.FindNumberInMatrix(number);
                     if (bingoGraph.FindBingoCombination())
                     {
-                        result = bingoGraph.MultiplyOfRowAndNumberResult();
-                        bingoGraphWithResult = bingoGraph;
-                        resultIsSet = true;
-                        Console.WriteLine("\nFinal Result after multiplying sum of elements in row and current number: " + result);
-                        break;
+                        if (!firstResultIsSet)
+                        {
+                            Console.WriteLine("\nPart1 solution | Final Result after multiplying not mentioned elements in row and current number: " +
+                                bingoGraph.MultiplyOfRowAndNumberResult());
+                            firstResultIsSet = true;
+                        }
+
+                        bingoGraphsWithoutSolutionYet.RemoveAll(x => x.Matrix == bingoGraph.Matrix);
+                        lastNumber = number;
+                        if (bingoGraphsWithoutSolutionYet.Count() == 1)
+                        {
+                            lastResultIsSet = true;
+                            break;
+                        }
                     }
                 }
-                if (resultIsSet)
-                    break;
+                if (lastResultIsSet)
+                  break;
             }
 
-            if (!resultIsSet)
-                Console.WriteLine("Cannot find result");
+            if (lastResultIsSet && bingoGraphsWithoutSolutionYet.Count == 1)
+            {
+                var lastResult = bingoGraphsWithoutSolutionYet.FirstOrDefault().MultiplyUnmarkedNumsUntilConcreteOne(_bingoNumbers, lastNumber);
+                Console.WriteLine("\nPart2 solution: " + lastResult); // part2 solution
+            }
+
+            if (!firstResultIsSet || !lastResultIsSet)
+                Console.WriteLine("Cannot find any result");
 
         }
 
@@ -100,6 +122,8 @@ namespace Day04
             SplitTextIntoSeparateBoards();
             ConvertTextIntoGraphs();
             ConvertTypedNumbersIntoList();
+
+            Console.WriteLine("Part1, Part2");
             IterateThroughNumbersAndCheckResults();
         }
 
